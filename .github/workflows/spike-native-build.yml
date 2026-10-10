@@ -17,5 +17,12 @@ jobs:
       - run: npm install
       - run: npx expo install --check || true
       - run: npx expo prebuild --platform android --no-install
-      - run: cd android && ./gradlew assembleDebug --no-daemon > ../gradle.log 2>&1; status=$?; grep -nE -A25 'What went wrong|^e: |error:' ../gradle.log | head -120; exit $status
+      - name: Native build
         shell: bash
+        run: |
+          cd android
+          set +e
+          ./gradlew assembleDebug --no-daemon > ../gradle.log 2>&1
+          status=$?
+          grep -nE -A25 'What went wrong|^e: |error:' ../gradle.log | head -120
+          exit $status
