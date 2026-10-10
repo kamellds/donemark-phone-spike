@@ -1,0 +1,21 @@
+name: spike-native-build
+# Throwaway diagnostic: the same native Android build Expo runs, on GitHub's machine, so its error is readable.
+on:
+  workflow_dispatch:
+jobs:
+  gradle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - run: npm install
+      - run: npx expo install --check || true
+      - run: npx expo prebuild --platform android --no-install
+      - run: cd android && ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tail -150
+        shell: bash
