@@ -41,8 +41,11 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           mkdir -p .constat/phone-build
+          set +e
           eas build --profile constat-phone --platform android --non-interactive --wait --json > .constat/phone-build/eas-build.json
+          status=$?
           cat .constat/phone-build/eas-build.json
+          exit $status
       - name: Describe the test app for DoneMark
         run: |
           node - <<'CONSTAT_PHONE_BUILD'
