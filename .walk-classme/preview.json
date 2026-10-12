@@ -1,11 +1,11 @@
 {
   "schema": "constat.preview/v1",
-  "commit": "dbf6c36b42723b719e86c0fd41550be1dd0b4e7f",
-  "branch": "constat/task-5708497f",
+  "commit": "b4e6446c554922d37d05ab3b31610ebbaa6ea3e2",
+  "branch": "constat/task-a11b52ef",
   "runtimeVersion": "39458baefbdaeb4bec8c9dbdcd25700986f139df",
   "runtimePlatform": "android",
-  "updateGroup": "297a56a3-884a-495b-af8d-1da89d0d49f2",
-  "manifestUrl": "https://u.expo.dev/6b5f96ab-1b7f-4108-81e6-89b8eca36186/group/297a56a3-884a-495b-af8d-1da89d0d49f2",
+  "updateGroup": "42addac8-5479-4933-9047-09014eac8a13",
+  "manifestUrl": "https://u.expo.dev/6b5f96ab-1b7f-4108-81e6-89b8eca36186/group/42addac8-5479-4933-9047-09014eac8a13",
   "scheme": "classme",
   "appName": "ClassMe",
   "platforms": [
@@ -13,5 +13,5 @@
     "android"
   ],
   "talksTo": null,
-  "publishedAt": "2026-10-12T15:20:46Z"
+  "publishedAt": "2026-10-12T16:20:44Z"
 }
