@@ -4,6 +4,8 @@ mkdir -p out
 echo "emulator up: $(date -u +%T)" >> out/times.txt
 adb install -r app.apk; echo "installed: $(date -u +%T)" >> out/times.txt
 adb logcat -c
+for i in $(seq 1 60); do adb shell dumpsys connectivity | grep -q "VALIDATED" && break; sleep 2; done
+echo "network validated after ${i} tries: $(date -u +%T)" >> out/times.txt
 adb shell am start -W -a android.intent.action.VIEW -d "anewapp://expo-development-client/?url=https%3A%2F%2Fu.expo.dev%2F64916f0d-eca8-458b-8392-675cca22d7c4%2Fgroup%2Fb28e7822-6d71-405f-981a-5db53df095ac" com.kamellds.donemark_phone_spike > out/am.txt 2>&1
 for t in 3 8 15 25 40 60 90; do sleep_for=$t; sleep 5; adb exec-out screencap -p > out/open-$(date -u +%H%M%S).png; done
 echo "opened, photos taken: $(date -u +%T)" >> out/times.txt
