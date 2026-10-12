@@ -4,3 +4,4 @@ name: The first screen shows the app's name.
 - extendedWaitUntil:
     visible: "A new app"
     timeout: 20000
+- assertVisible: "Welcome, Awa"
