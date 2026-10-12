@@ -16,7 +16,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Get the test app
-        run: curl -sSL -o app.apk "https://expo.dev/artifacts/eas/gSuAJljEotuF1uSi9vE9AR5Zd0gAmQK-IIrg4rUU3wY.apk" && ls -la app.apk && date -u +%T
+        run: curl -sSL -o app.apk "https://expo.dev/artifacts/eas/dSPCVN44FAIthkqdztsGtCsukj6TNcmvVJVyJ7NtIgI.apk" && ls -la app.apk && date -u +%T
       - name: Install Maestro
         run: |
           curl -fsSL "https://get.maestro.mobile.dev" | bash

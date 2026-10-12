@@ -3,16 +3,13 @@ set -x
 mkdir -p out
 echo "emulator up: $(date -u +%T)" >> out/times.txt
 adb install -r app.apk; echo "installed: $(date -u +%T)" >> out/times.txt
-adb logcat -c
-for i in $(seq 1 60); do adb shell dumpsys connectivity | grep -q "VALIDATED" && break; sleep 2; done
-echo "network validated after ${i} tries: $(date -u +%T)" >> out/times.txt
-adb shell am start -W -a android.intent.action.VIEW -d "anewapp://expo-development-client/?url=https%3A%2F%2Fu.expo.dev%2F64916f0d-eca8-458b-8392-675cca22d7c4%2Fgroup%2Fb28e7822-6d71-405f-981a-5db53df095ac" com.kamellds.donemark_phone_spike > out/am.txt 2>&1
-for t in 3 8 15 25 40 60 90; do sleep_for=$t; sleep 5; adb exec-out screencap -p > out/open-$(date -u +%H%M%S).png; done
+sleep 20
+adb logcat -G 16M; adb logcat -c
+(adb logcat -v time > out/logcat-live.txt 2>&1 &)
+adb shell am start -W -a android.intent.action.VIEW -d "classme://expo-development-client/?url=https%3A%2F%2Fu.expo.dev%2F6b5f96ab-1b7f-4108-81e6-89b8eca36186%2Fgroup%2Fe2eaf7ae-e0fa-4b9f-bd38-ac1674177545" com.contactdev2.classme > out/am.txt 2>&1
+for t in 1 2 3 4 5 6 7 8 9 10 11 12; do sleep 5; adb exec-out screencap -p > out/open-$(date -u +%H%M%S).png; done
 echo "opened, photos taken: $(date -u +%T)" >> out/times.txt
 maestro hierarchy > out/hierarchy.json 2>&1
-cd out
-maestro test ../.walk/opens.yaml --format junit --output opens.xml; echo "opens exit=$? $(date -u +%T)" >> times.txt
-cp ../.walk/*.png . 2>/dev/null; cp -r ~/.maestro/tests ./maestro-tests 2>/dev/null
-adb exec-out screencap -p > z-end.png
-adb logcat -d > logcat.txt
+adb exec-out screencap -p > out/z-end.png
+pkill -f "adb logcat" || true
 exit 0
