@@ -182,6 +182,18 @@ jobs:
             *) echo "CONSTAT_NOT_WALKED=the test app's address is not Expo's" >> "$GITHUB_ENV" ;;
           esac
           echo "CONSTAT_PHONE_BUILD_JSON=$(ls .constat/walk-build/*.json | head -1)" >> "$GITHUB_ENV"
+      # Template 59 (12 October 2026): DoneMark's walk is taken from the app's merged main.
+      - name: Take DoneMark's walk from the app's main
+        if: steps.walks.outputs.any == 'yes'
+        run: |
+          DEFAULT="${{ github.event.repository.default_branch }}"
+          mkdir -p .constat
+          if git fetch --depth=1 origin "$DEFAULT" && git show "FETCH_HEAD:.github/scripts/constat-phone-walks.mjs" > .constat/walk.mjs 2>/dev/null; then
+            echo "CONSTAT_WALK_FROM=main" >> "$GITHUB_ENV"
+          else
+            cp .github/scripts/constat-phone-walks.mjs .constat/walk.mjs
+            echo "CONSTAT_WALK_FROM=branch" >> "$GITHUB_ENV"
+          fi
       - name: Get the walking tools
         if: steps.walks.outputs.any == 'yes'
         run: |
@@ -203,7 +215,7 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
-          script: if [ -f app.apk ]; then adb install -r app.apk; fi; node .github/scripts/constat-phone-walks.mjs
+          script: if [ -f app.apk ]; then adb install -r app.apk; fi; node .constat/walk.mjs
       - uses: actions/upload-artifact@v4
         if: steps.walks.outputs.any == 'yes'
         with:
