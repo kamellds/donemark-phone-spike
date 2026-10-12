@@ -1,6 +1,17 @@
 appId: com.contactdev2.classme
 name: After submitting valid signup details, the teacher's profile is saved and they can log in with it.
 ---
+- retry:
+    maxRetries: 3
+    commands:
+      - runFlow:
+          when:
+            visible: "There was a problem loading the project."
+          commands:
+            - tapOn: "Reload"
+      - extendedWaitUntil:
+          visible: "(This is the developer menu.*|Welcome back)"
+          timeout: 30000
 - runFlow:
     when:
       visible: "This is the developer menu.*"
