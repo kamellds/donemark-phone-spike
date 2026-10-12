@@ -1,0 +1,7 @@
+appId: com.kamellds.donemark_phone_spike
+name: A button that is not on the first screen opens nothing.
+---
+- tapOn: "No such button"
+- extendedWaitUntil:
+    visible: "Never shown"
+    timeout: 5000
