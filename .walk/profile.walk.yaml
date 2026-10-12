@@ -1,0 +1,48 @@
+appId: com.contactdev2.classme
+name: After submitting valid signup details, the teacher's profile is saved and they can log in with it.
+---
+- runFlow:
+    when:
+      visible: "This is the developer menu.*"
+    commands:
+      - tapOn: "Continue"
+- extendedWaitUntil:
+    visible: "Welcome back"
+    timeout: 60000
+- takeScreenshot: s1-login
+- tapOn: "Create a profile"
+- extendedWaitUntil:
+    visible: "What should we call you?"
+    timeout: 15000
+- tapOn: "Ms. Patel"
+- inputText: "Awa Diallo"
+- hideKeyboard
+- takeScreenshot: s2-name
+- tapOn: "Continue"
+- extendedWaitUntil:
+    visible: "Hi, Awa Diallo"
+    timeout: 15000
+- tapOn: "you@school.edu"
+- inputText: "awa@school.fr"
+- tapOn: "At least 8 characters"
+- inputText: "classme2026"
+- hideKeyboard
+- takeScreenshot: s3-account
+- tapOn:
+    text: "Create Profile"
+    index: 1
+- takeScreenshot: s4-pressed
+- extendedWaitUntil:
+    visible: "Profile created.*"
+    timeout: 20000
+- takeScreenshot: s5-created
+- tapOn: "you@school.edu"
+- inputText: "awa@school.fr"
+- tapOn: "Your password"
+- inputText: "classme2026"
+- hideKeyboard
+- tapOn: "Log In"
+- extendedWaitUntil:
+    visible: ".*Awa Diallo.*"
+    timeout: 20000
+- takeScreenshot: s6-home
