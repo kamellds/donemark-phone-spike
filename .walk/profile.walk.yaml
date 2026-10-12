@@ -4,7 +4,7 @@ name: After submitting valid signup details, the teacher's profile is saved and 
 - retry:
     maxRetries: 4
     commands:
-      - openLink: "classme://expo-development-client/?url=https%3A%2F%2Fu.expo.dev%2F6b5f96ab-1b7f-4108-81e6-89b8eca36186%2Fgroup%2Fe2eaf7ae-e0fa-4b9f-bd38-ac1674177545"
+      - openLink: "classme://expo-development-client/?url=https%3A%2F%2Fu.expo.dev%2F6b5f96ab-1b7f-4108-81e6-89b8eca36186%2Fgroup%2Fe2eaf7ae-e0fa-4b9f-bd38-ac1674177545&disableOnboarding=1"
       - extendedWaitUntil:
           visible: "(This is the developer menu.*|Welcome back)"
           timeout: 45000
@@ -13,6 +13,17 @@ name: After submitting valid signup details, the teacher's profile is saved and 
       visible: "This is the developer menu.*"
     commands:
       - tapOn: "Continue"
+- runFlow:
+    when:
+      visible: "Connected to:"
+    commands:
+      - pressKey: back
+- runFlow:
+    when:
+      visible: "Connected to:"
+    commands:
+      - tapOn:
+          point: "50%,20%"
 - extendedWaitUntil:
     visible: "Welcome back"
     timeout: 60000
