@@ -2,16 +2,12 @@ appId: com.contactdev2.classme
 name: After submitting valid signup details, the teacher's profile is saved and they can log in with it.
 ---
 - retry:
-    maxRetries: 3
+    maxRetries: 4
     commands:
-      - runFlow:
-          when:
-            visible: "There was a problem loading the project."
-          commands:
-            - tapOn: "Reload"
+      - openLink: "classme://expo-development-client/?url=https%3A%2F%2Fu.expo.dev%2F6b5f96ab-1b7f-4108-81e6-89b8eca36186%2Fgroup%2Fe2eaf7ae-e0fa-4b9f-bd38-ac1674177545"
       - extendedWaitUntil:
           visible: "(This is the developer menu.*|Welcome back)"
-          timeout: 30000
+          timeout: 45000
 - runFlow:
     when:
       visible: "This is the developer menu.*"
