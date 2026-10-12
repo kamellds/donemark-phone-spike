@@ -7,7 +7,7 @@
       "package": "com.kamellds.donemark_phone_spike"
     },
     "runtimeVersion": {
-      "policy": "appVersion"
+      "policy": "fingerprint"
     },
     "plugins": [
       [
