@@ -1,0 +1,40 @@
+# THROWAWAY spike (12 Oct 2026): can a DoneMark test app be walked on an Android emulator in CI?
+name: walk-spike
+on:
+  push:
+    branches: [walk-spike]
+jobs:
+  walk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "start $(date -u +%T)" | tee start.txt
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Get the test app
+        run: curl -sSL -o app.apk "https://expo.dev/artifacts/eas/gSuAJljEotuF1uSi9vE9AR5Zd0gAmQK-IIrg4rUU3wY.apk" && ls -la app.apk && date -u +%T
+      - name: Install Maestro
+        run: |
+          curl -fsSL "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+          date -u +%T
+      - name: Walk on an emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
+          script: ./.walk/walk.sh
+      - run: mkdir -p out && cp start.txt out/ && echo "end $(date -u +%T)" >> out/times.txt
+        if: always()
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: walk-out
+          path: out/

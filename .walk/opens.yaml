@@ -1,0 +1,15 @@
+appId: com.kamellds.donemark_phone_spike
+name: The first screen shows the app's name
+---
+- openLink: "anewapp://expo-development-client/?url=https%3A%2F%2Fu.expo.dev%2F64916f0d-eca8-458b-8392-675cca22d7c4%2Fgroup%2Fb28e7822-6d71-405f-981a-5db53df095ac"
+- takeScreenshot: 1-opened
+- extendedWaitUntil:
+    visible: "A new app"
+    timeout: 180000
+- takeScreenshot: 2-loaded
+- tapOn:
+    text: "Continue"
+    optional: true
+- takeScreenshot: 3-after-continue
+- assertVisible: "A new app"
+- takeScreenshot: 4-seen
