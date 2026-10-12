@@ -1,0 +1,37 @@
+# THROWAWAY (12 Oct 2026): the new walk script on ClassMe's own walks, test app and preview.
+name: walk-classme
+on:
+  push:
+    branches: [walk-classme]
+jobs:
+  walk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools and the test app
+        run: |
+          URL=$(node -e "process.stdout.write(require('./.walk-classme/build.json').installUrl)")
+          curl -fsSL -o app.apk "$URL"
+          curl -fsSL -o maestro.zip https://github.com/mobile-dev-inc/maestro/releases/download/cli-2.11.0/maestro.zip
+          unzip -q maestro.zip -d "$HOME/.maestro-cli" && echo "$HOME/.maestro-cli/maestro/bin" >> "$GITHUB_PATH"
+          npm install --no-save --prefix .constat/walk-deps yaml@2.9.0
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2.38.0
+        env:
+          CONSTAT_PREVIEW_JSON: .walk-classme/preview.json
+          CONSTAT_PHONE_BUILD_JSON: .walk-classme/build.json
+          CONSTAT_YAML: ${{ github.workspace }}/.constat/walk-deps/node_modules/yaml
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
+          script: adb install -r app.apk; node .walk-classme/walk.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: constat-journeys
+          path: .constat/journeys/
