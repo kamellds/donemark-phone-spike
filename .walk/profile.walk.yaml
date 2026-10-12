@@ -27,7 +27,16 @@ name: After submitting valid signup details, the teacher's profile is saved and 
 - extendedWaitUntil:
     visible: "Welcome back"
     timeout: 60000
+- runFlow:
+    when:
+      visible: "DoneMark · Try"
+    commands:
+      - takeScreenshot: s0-strip
+      - tapOn: "Hide"
 - takeScreenshot: s1-login
+- scrollUntilVisible:
+    element: "Create a profile"
+    direction: DOWN
 - tapOn: "Create a profile"
 - extendedWaitUntil:
     visible: "What should we call you?"
@@ -42,9 +51,18 @@ name: After submitting valid signup details, the teacher's profile is saved and 
     timeout: 15000
 - tapOn: "you@school.edu"
 - inputText: "awa@school.fr"
+- hideKeyboard
+- scrollUntilVisible:
+    element: "At least 8 characters"
+    direction: DOWN
 - tapOn: "At least 8 characters"
 - inputText: "classme2026"
 - hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: "Create Profile"
+      index: 1
+    direction: DOWN
 - takeScreenshot: s3-account
 - tapOn:
     text: "Create Profile"
@@ -54,11 +72,17 @@ name: After submitting valid signup details, the teacher's profile is saved and 
     visible: "Profile created.*"
     timeout: 20000
 - takeScreenshot: s5-created
+- scrollUntilVisible:
+    element: "you@school.edu"
+    direction: UP
 - tapOn: "you@school.edu"
 - inputText: "awa@school.fr"
 - tapOn: "Your password"
 - inputText: "classme2026"
 - hideKeyboard
+- scrollUntilVisible:
+    element: "Log In"
+    direction: DOWN
 - tapOn: "Log In"
 - extendedWaitUntil:
     visible: ".*Awa Diallo.*"
