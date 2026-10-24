@@ -10,7 +10,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.ref_name == github.event.repository.default_branch
     steps:
       - name: Check the Expo key is saved
         env:
