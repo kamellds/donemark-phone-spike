@@ -3,6 +3,10 @@
     "name": "A new app",
     "slug": "a-new-app",
     "scheme": "anewapp",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "android": {
       "package": "com.kamellds.donemark_phone_spike"
     },
