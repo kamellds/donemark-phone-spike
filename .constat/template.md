@@ -9,4 +9,4 @@ this repository as being from no template — which will then be the truth about
 - template: expo
 - name: Phone app · Expo
 - detail: tests, a preview on your phone per attempt
-- version: 54
+- version: 80

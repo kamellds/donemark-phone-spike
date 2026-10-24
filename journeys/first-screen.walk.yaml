@@ -1,6 +1,0 @@
-appId: com.kamellds.donemark_phone_spike
-name: The first screen shows the app's name.
----
-- extendedWaitUntil:
-    visible: "A new app"
-    timeout: 20000

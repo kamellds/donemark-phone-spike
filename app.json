@@ -8,16 +8,6 @@
     },
     "runtimeVersion": {
       "policy": "fingerprint"
-    },
-    "plugins": [
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "kotlinVersion": "1.9.25"
-          }
-        }
-      ]
-    ]
+    }
   }
 }
